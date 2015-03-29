@@ -5504,7 +5504,6 @@ public final class Settings {
          * @hide
          */
         public static final String GLOBAL_ACTIONS_LIST = "global_actions_list";
-
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
@@ -5524,6 +5523,12 @@ public final class Settings {
          * @hide
          */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
+
+        /**
+         * Allow disable of screenshot shutter sound
+         * @hide
+         */
+        public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
