@@ -5654,6 +5654,12 @@ public final class Settings {
         public static final String NAVIGATION_BAR_INVERSE = "navigation_bar_inverse";
 
         /**
+         * Whether to enable the ripple animation on fingerprint unlock
+         * @hide
+         */
+        public static final String ENABLE_RIPPLE_EFFECT = "enable_ripple_effect";
+
+        /**
          * Battery style
          * @hide
          */
