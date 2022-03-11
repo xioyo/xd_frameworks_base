@@ -19,7 +19,8 @@ package com.android.keyguard;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.view.View;
-import android.widget.LinearLayout;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.constraintlayout.helper.widget.Flow;
 import android.os.UserHandle;
@@ -125,18 +126,13 @@ public class KeyguardPinViewController
         if (scramblePin) {
             Collections.shuffle(sNumbers);
             // get all children who are NumPadKey's
-            LinearLayout container = (LinearLayout) mView.findViewById(R.id.pin_container);
+            ConstraintLayout container = (ConstraintLayout) mView.findViewById(R.id.pin_container);
 
             List<NumPadKey> views = new ArrayList<NumPadKey>();
             for (int i = 0; i < container.getChildCount(); i++) {
-                if (container.getChildAt(i) instanceof LinearLayout) {
-                    LinearLayout nestedLayout = ((LinearLayout) container.getChildAt(i));
-                    for (int j = 0; j < nestedLayout.getChildCount(); j++){
-                        View view = nestedLayout.getChildAt(j);
-                        if (view.getClass() == NumPadKey.class) {
-                            views.add((NumPadKey) view);
-                        }
-                    }
+                View view = container.getChildAt(i);
+                if (view.getClass() == NumPadKey.class) {
+                    views.add((NumPadKey) view);
                 }
             }
 
