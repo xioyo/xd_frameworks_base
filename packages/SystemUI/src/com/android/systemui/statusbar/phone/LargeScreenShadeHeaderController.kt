@@ -74,6 +74,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
     private val iconContainer: StatusIconContainer
     private val carrierIconSlots: List<String>
     private val qsCarrierGroupController: QSCarrierGroupController
+    private val batteryIcon: BatteryMeterView = header.findViewById(R.id.batteryRemainingIcon)
     private val clock: TextView = header.findViewById(R.id.clock)
     private val date: TextView = header.findViewById(R.id.date)
     private val qsCarrierGroup: QSCarrierGroup = header.findViewById(R.id.carrier_group)
@@ -159,17 +160,20 @@ class LargeScreenShadeHeaderController @Inject constructor(
 
         bindConfigurationListener()
 
+        // Icon color
+        val colorPrimary = Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimary)
+        val colorSecondary = Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorSecondary)
+
         batteryMeterViewController.init()
-        val batteryIcon: BatteryMeterView = header.findViewById(R.id.batteryRemainingIcon)
 
         // battery settings same as in QS icons
         batteryMeterViewController.ignoreTunerUpdates()
         batteryIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE)
+        batteryIcon.updateColors(colorPrimary, colorSecondary, colorPrimary);
 
         iconContainer = header.findViewById(R.id.statusIcons)
         iconManager = StatusBarIconController.TintedIconManager(iconContainer, featureFlags)
-        iconManager.setTint(Utils.getColorAttrDefaultColor(header.context,
-                android.R.attr.textColorPrimary))
+        iconManager.setTint(colorPrimary)
 
         carrierIconSlots = if (featureFlags.isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS)) {
             listOf(
@@ -209,6 +213,15 @@ class LargeScreenShadeHeaderController @Inject constructor(
                 FontSizeUtils.updateFontSizeFromStyle(clock, qsStatusStyle)
                 FontSizeUtils.updateFontSizeFromStyle(date, qsStatusStyle)
                 qsCarrierGroup.updateTextAppearance(qsStatusStyle)
+            }
+
+            override fun onThemeChanged() {
+                val colorPrimary = Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimary)
+                val colorSecondary = Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorSecondary)
+
+                iconManager.setTint(colorPrimary)
+                clock.setTextColor(colorPrimary)
+                batteryIcon.updateColors(colorPrimary, colorSecondary, colorPrimary)
             }
         }
         configurationController.addCallback(listener)
