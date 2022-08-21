@@ -215,7 +215,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
                 qsCarrierGroup.updateTextAppearance(qsStatusStyle)
             }
 
-            override fun onThemeChanged() {
+            override fun onUiModeChanged() {
                 val colorPrimary = Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorPrimary)
                 val colorSecondary = Utils.getColorAttrDefaultColor(header.context, android.R.attr.textColorSecondary)
 
