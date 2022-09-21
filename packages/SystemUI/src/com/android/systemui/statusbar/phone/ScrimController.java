@@ -491,7 +491,11 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
      * This is used to apply additional keyguard dimming on top of the default scrim alpha value.
      */
     protected void applyCompositeAlphaOnScrimBehindKeyguard() {
-        setScrimBehindValues(0);
+        int compositeAlpha = ColorUtils.compositeAlpha(
+                (int) (255 * mAdditionalScrimBehindAlphaKeyguard),
+                (int) (255 * KEYGUARD_SCRIM_ALPHA));
+        float keyguardScrimAlpha = (float) compositeAlpha / 255;
+        setScrimBehindValues(keyguardScrimAlpha);
     }
 
     /**
