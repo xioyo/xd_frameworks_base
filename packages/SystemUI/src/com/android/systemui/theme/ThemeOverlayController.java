@@ -479,7 +479,9 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
 
     private void setBootColorProps() {
         // persist.bootanim.color1, persist.bootanim.color2, persist.bootanim.color3, persist.bootanim.color4
-        int[] bootColors = {android.R.color.system_accent3_100, android.R.color.system_accent1_300, android.R.color.system_accent2_500, android.R.color.system_accent1_100};
+        // The four colors here are chosen based on a figma spec of xdroid bootanimation
+        // If you plan on having your own custom animation you potentially want to change these colors
+        int[] bootColors = {android.R.color.system_accent3_100, android.R.color.system_accent1_50, android.R.color.system_accent2_800, android.R.color.system_accent1_50};
         try {
             for (int i = 0; i < bootColors.length; i++) {
                 String color = String.valueOf(mResources.getColor(bootColors[i]));
