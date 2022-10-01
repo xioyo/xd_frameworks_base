@@ -165,6 +165,7 @@ public class CommandQueue extends IStatusBar.Stub implements
     private static final int MSG_UNREGISTER_NEARBY_MEDIA_DEVICE_PROVIDER = 67 << MSG_SHIFT;
     private static final int MSG_TILE_SERVICE_REQUEST_LISTENING_STATE = 68 << MSG_SHIFT;
     private static final int MSG_SET_BLOCKED_GESTURAL_NAVIGATION = 71 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_CAMERA_FLASH = 69 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -480,6 +481,7 @@ public class CommandQueue extends IStatusBar.Stub implements
                 @NonNull INearbyMediaDevicesProvider provider) {}
 
         default void setBlockedGesturalNavigation(boolean blocked) {}
+        default void toggleCameraFlash() { }
     }
 
     public CommandQueue(Context context) {
@@ -1279,6 +1281,14 @@ public class CommandQueue extends IStatusBar.Stub implements
         }
     }
 
+    @Override
+    public void toggleCameraFlash() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
+            mHandler.sendEmptyMessage(MSG_TOGGLE_CAMERA_FLASH);
+        }
+    }
+
     private final class H extends Handler {
         private H(Looper l) {
             super(l);
@@ -1727,6 +1737,11 @@ public class CommandQueue extends IStatusBar.Stub implements
                     break;
                 case MSG_SET_BLOCKED_GESTURAL_NAVIGATION:
                     mCallbacks.forEach(cb -> cb.setBlockedGesturalNavigation((Boolean) msg.obj));
+                    break;
+                case MSG_TOGGLE_CAMERA_FLASH:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleCameraFlash();
+                    }
                     break;
             }
         }
