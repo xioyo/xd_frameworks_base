@@ -75,6 +75,13 @@
         android:key="wifi"
         android:title="@string/quick_settings_wifi_label" />
 
+    <!-- Wi-Fi standard number -->
+    <com.android.settings.custom.preference.SecureSettingSwitchPreference
+        android:key="show_wifi_standard_icon"
+        android:title="@string/show_wifi_standard_icon_title"
+        android:defaultValue="false"
+        android:icon="@drawable/ic_statusbar_wifi_standard" />
+
     <com.android.systemui.tuner.StatusBarSwitch
         android:icon="@drawable/ic_statusbar_ethernet"
         android:key="ethernet"
